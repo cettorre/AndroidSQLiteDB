@@ -1,11 +1,18 @@
 package com.example.formacio.androidlocaldb;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SimpleCursorAdapter;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class InsertAnimal extends AppCompatActivity {
 
@@ -17,6 +24,12 @@ public class InsertAnimal extends AppCompatActivity {
     EditText photo;
 
     Button sendData;
+
+    DbHelper mHelper;
+    SQLiteDatabase mDb;
+    Cursor mCursor;
+    SimpleCursorAdapter mAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +44,8 @@ public class InsertAnimal extends AppCompatActivity {
         photo = (EditText) findViewById(R.id.name);
         sendData=(Button) findViewById(R.id.sendData);
 
+        mHelper = new DbHelper(this);
+
         sendData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,19 +58,37 @@ public class InsertAnimal extends AppCompatActivity {
                 String sDate=name.getText().toString();
                 String sPhoto=name.getText().toString();
 
-                i.putExtra("name",sName);
-                i.putExtra("age",sAge);
-                i.putExtra("chip",sChip);
-                i.putExtra("type",sType);
-                i.putExtra("date",sDate);
-                i.putExtra("photo",sPhoto);
 
 
+                //WRITE ON DB
+
+                //Open connections to the database
+                mDb = mHelper.getWritableDatabase();
+                String[] columns = new String[]{"_id", DbHelper.COL_NAME, DbHelper.COL_DATE};
+                mCursor = mDb.query(DbHelper.TABLE_NAME, columns, null, null, null, null, null, null);
+                //Refresh the list
+                String[] headers = new String[]{DbHelper.COL_NAME, DbHelper.COL_DATE};
+                mAdapter = new SimpleCursorAdapter(InsertAnimal.this, android.R.layout.two_line_list_item,
+                        mCursor, headers, new int[]{android.R.id.text1, android.R.id.text2});
 
 
+                //Add a new value to the database
+                ContentValues cv = new ContentValues(2);
+
+                cv.put(DbHelper.COL_NAME, sName);
+
+                //Create a formatter for SQL date format
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                cv.put(DbHelper.COL_DATE, dateFormat.format(new Date())); //InsertAnimal 'now' as the date
+                mDb.insert(DbHelper.TABLE_NAME, null, cv);
+
+
+                
                 startActivity(i);
             }
         });
+
+
     }
 
 

@@ -15,7 +15,7 @@ package com.example.formacio.androidlocaldb;
         import java.text.SimpleDateFormat;
         import java.util.Date;
 
-public class DatabaseActivity extends Activity implements AdapterView.OnItemClickListener {
+public class DatabaseActivity extends Activity  {
 
 
     Button mAddAnimal;
@@ -45,7 +45,19 @@ public class DatabaseActivity extends Activity implements AdapterView.OnItemClic
         });
 
         mList = (ListView) findViewById(R.id.list);
-        mList.setOnItemClickListener(this);
+
+        mList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent i = new Intent(DatabaseActivity.this, AnimalInfo.class);
+                i.putExtra("position", position);
+                startActivity(i);
+            }
+        });
+
+
+
 
         mHelper = new DbHelper(this);
     }
@@ -64,19 +76,6 @@ public class DatabaseActivity extends Activity implements AdapterView.OnItemClic
         mList.setAdapter(mAdapter);
 
 
-
-        //Add a new value to the database
-        ContentValues cv = new ContentValues(2);
-
-        Intent i2 = getIntent();
-        String nameA = i2.getStringExtra("name");
-
-        cv.put(DbHelper.COL_NAME, nameA);
-
-        //Create a formatter for SQL date format
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        cv.put(DbHelper.COL_DATE, dateFormat.format(new Date())); //InsertAnimal 'now' as the date
-        mDb.insert(DbHelper.TABLE_NAME, null, cv);
         //Refresh the list
         mCursor.requery();
         mAdapter.notifyDataSetChanged();
@@ -97,16 +96,4 @@ public class DatabaseActivity extends Activity implements AdapterView.OnItemClic
     }
 
 
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-        //Delete the item from the database
-        mCursor.moveToPosition(position);
-        //Get the id value of this row
-        String rowId = mCursor.getString(0); //Column 0 of the cursor is the id
-        mDb.delete(DbHelper.TABLE_NAME, "_id = ?", new String[]{rowId});
-        //Refresh the list
-        mCursor.requery();
-        mAdapter.notifyDataSetChanged();
-    }
 }
