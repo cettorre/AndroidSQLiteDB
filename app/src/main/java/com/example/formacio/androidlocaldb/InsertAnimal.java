@@ -83,7 +83,7 @@ public class InsertAnimal extends AppCompatActivity {
                 mDb.insert(DbHelper.TABLE_NAME, null, cv);
 
 
-                
+
                 startActivity(i);
             }
         });

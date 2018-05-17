@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class AnimalInfo extends AppCompatActivity {
 
@@ -15,15 +16,50 @@ public class AnimalInfo extends AppCompatActivity {
     DbHelper mHelper;
     SQLiteDatabase mDb;
     Cursor mCursor;
+    TextView iName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animal_info);
 
+        iName= findViewById(R.id.iName);
+
         delBtn=(Button) findViewById(R.id.iDelete);
 
         mHelper = new DbHelper(this);
+
+
+       //TODO read selected record from DB**************
+
+        Intent i = getIntent();
+        int pos = i.getIntExtra("position",2);
+        Log.e("position",String.valueOf(pos));
+
+        //Open connections to the database
+        mDb = mHelper.getWritableDatabase();
+        String[] columns = new String[]{"_id", DbHelper.COL_NAME, DbHelper.COL_DATE};
+        mCursor = mDb.query(DbHelper.TABLE_NAME, columns, null, null, null, null, null, null);
+        mCursor.moveToPosition(pos);
+        //Get the id value of this row
+        String rowId = mCursor.getString(0); //Column 0 of the cursor is the id
+
+        //read value>>>>>>>>>>>>>>
+        //mDb.delete(DbHelper.TABLE_NAME, "_id = ?", new String[]{rowId});
+
+
+        //Refresh the list
+        mCursor.requery();
+
+
+
+        iName.setText("scooby");
+
+
+      //end   *******************************************
+
+
+
 
         delBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,6 +78,11 @@ public class AnimalInfo extends AppCompatActivity {
                 mCursor.moveToPosition(pos);
                 //Get the id value of this row
                 String rowId = mCursor.getString(0); //Column 0 of the cursor is the id
+                Log.e("rowID",rowId);
+
+
+
+
                 mDb.delete(DbHelper.TABLE_NAME, "_id = ?", new String[]{rowId});
                 //Refresh the list
                 mCursor.requery();
@@ -50,7 +91,6 @@ public class AnimalInfo extends AppCompatActivity {
 
                 Intent i2 = new Intent(AnimalInfo.this, DatabaseActivity.class);
                 startActivity(i2);
-
 
 
 
