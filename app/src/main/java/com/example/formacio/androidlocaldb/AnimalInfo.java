@@ -17,6 +17,11 @@ public class AnimalInfo extends AppCompatActivity {
     SQLiteDatabase mDb;
     Cursor mCursor;
     TextView iName;
+    TextView iDate;
+    TextView iAge;
+    TextView iChip;
+    TextView iType;
+    TextView iPhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +29,11 @@ public class AnimalInfo extends AppCompatActivity {
         setContentView(R.layout.activity_animal_info);
 
         iName= findViewById(R.id.iName);
+        iDate= findViewById(R.id.iDate);
+        iAge= findViewById(R.id.iAge);
+        iChip= findViewById(R.id.iChip);
+        iType= findViewById(R.id.iType);
+        iPhoto= findViewById(R.id.iPhoto);
 
         delBtn=(Button) findViewById(R.id.iDelete);
 
@@ -38,7 +48,8 @@ public class AnimalInfo extends AppCompatActivity {
 
         //Open connections to the database
         mDb = mHelper.getWritableDatabase();
-        String[] columns = new String[]{"_id", DbHelper.COL_NAME, DbHelper.COL_DATE};
+        // TODO add coloumn
+        String[] columns = new String[]{"_id", DbHelper.COL_NAME, DbHelper.COL_DATE,DbHelper.COL_AGE};
         mCursor = mDb.query(DbHelper.TABLE_NAME, columns, null, null, null, null, null, null);
         mCursor.moveToPosition(pos);
         //Get the id value of this row
@@ -46,14 +57,24 @@ public class AnimalInfo extends AppCompatActivity {
 
         String name = mCursor.getString(mCursor.getColumnIndexOrThrow(DbHelper.COL_NAME));
         Log.e("column",name);
-        
+
+        String date = mCursor.getString(mCursor.getColumnIndexOrThrow(DbHelper.COL_DATE));
+        Log.e("column",date);
+
+       // TODO add coloumn
+
+        int age = mCursor.getInt(mCursor.getColumnIndexOrThrow(DbHelper.COL_AGE));
+        Log.e("column2",String.valueOf(age));
+
 
         //Refresh the list
         mCursor.requery();
 
 
-
+        //todo set string
         iName.setText(name);
+        iDate.setText(date);
+        iAge.setText(String.valueOf(age));
 
 
       //end   *******************************************
@@ -71,7 +92,8 @@ public class AnimalInfo extends AppCompatActivity {
 
                 //Open connections to the database
                 mDb = mHelper.getWritableDatabase();
-                String[] columns = new String[]{"_id", DbHelper.COL_NAME, DbHelper.COL_DATE};
+                //todo add column
+                String[] columns = new String[]{"_id", DbHelper.COL_NAME, DbHelper.COL_DATE, DbHelper.COL_AGE};
                 mCursor = mDb.query(DbHelper.TABLE_NAME, columns, null, null, null, null, null, null);
 
 

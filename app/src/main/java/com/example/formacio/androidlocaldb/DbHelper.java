@@ -20,12 +20,18 @@ public class DbHelper extends SQLiteOpenHelper{
     private static final String DB_NAME = "mydb";
     private static final int DB_VERSION = 1;
 
-    public static final String TABLE_NAME = "people";
-    public static final String COL_NAME = "pName";
-    public static final String COL_DATE = "pDate";
+    public static final String TABLE_NAME = "animals";
+    public static final String COL_NAME = "name";
+    public static final String COL_DATE = "date";
+    public static final String COL_AGE = "age";
+    public static final String COL_CHIP = "chip";
+    public static final String COL_TYPE = "type";
+    public static final String COL_PHOTO = "photo";
     private static final String STRING_CREATE =
             "CREATE TABLE " + TABLE_NAME + " (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + COL_NAME + " TEXT, " + COL_DATE + " DATE);";
+                    + COL_NAME + " TEXT, " + COL_DATE + " DATE," + COL_AGE + " INTEGER"+
+                     COL_CHIP + " TEXT, " + COL_TYPE + " TEXT,"+ COL_PHOTO + " TEXT" +
+                    ");";
 
     public DbHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -37,11 +43,14 @@ public class DbHelper extends SQLiteOpenHelper{
         db.execSQL(STRING_CREATE);
 
         //You may also load initial values into the database here
-        ContentValues cv = new ContentValues(2);
+        ContentValues cv = new ContentValues(10);
         cv.put(COL_NAME, "scooby dog");
         //Create a formatter for sql date format
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         cv.put(COL_DATE, dateFormat.format(new Date())); //InsertAnimal 'now' as the date
+        cv.put(COL_AGE, 7);
+
+
         db.insert(TABLE_NAME, null, cv);
     }
 
