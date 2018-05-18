@@ -49,7 +49,7 @@ public class AnimalInfo extends AppCompatActivity {
         //Open connections to the database
         mDb = mHelper.getWritableDatabase();
         // TODO add coloumn
-        String[] columns = new String[]{"_id", DbHelper.COL_NAME, DbHelper.COL_DATE,DbHelper.COL_AGE};
+        String[] columns = new String[]{"_id", DbHelper.COL_NAME, DbHelper.COL_DATE,DbHelper.COL_AGE, DbHelper.COL_CHIP, DbHelper.COL_TYPE,DbHelper.COL_PHOTO};
         mCursor = mDb.query(DbHelper.TABLE_NAME, columns, null, null, null, null, null, null);
         mCursor.moveToPosition(pos);
         //Get the id value of this row
@@ -66,15 +66,29 @@ public class AnimalInfo extends AppCompatActivity {
         int age = mCursor.getInt(mCursor.getColumnIndexOrThrow(DbHelper.COL_AGE));
         Log.e("column2",String.valueOf(age));
 
+        String chip = mCursor.getString(mCursor.getColumnIndexOrThrow(DbHelper.COL_CHIP));
+        Log.e("column",chip);
+
+        String type = mCursor.getString(mCursor.getColumnIndexOrThrow(DbHelper.COL_TYPE));
+        Log.e("column",type);
+
+        String photo = mCursor.getString(mCursor.getColumnIndexOrThrow(DbHelper.COL_PHOTO));
+  //      Log.e("column4",photo);
+
+
+
 
         //Refresh the list
         mCursor.requery();
 
 
         //todo set string
-        iName.setText(name);
-        iDate.setText(date);
-        iAge.setText(String.valueOf(age));
+        iName.setText("name: "+name);
+        iDate.setText("date: "+date);
+        iAge.setText("age: "+String.valueOf(age));
+        iChip.setText("chip: "+chip);
+        iType.setText("type: "+type);
+        //iPhoto.setText(photo);
 
 
       //end   *******************************************

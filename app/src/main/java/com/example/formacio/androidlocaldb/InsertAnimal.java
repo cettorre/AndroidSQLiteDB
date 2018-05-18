@@ -20,8 +20,7 @@ public class InsertAnimal extends AppCompatActivity {
     EditText age;
     EditText chip;
     EditText type;
-    EditText date;
-    EditText photo;
+
 
     Button sendData;
 
@@ -40,8 +39,7 @@ public class InsertAnimal extends AppCompatActivity {
         age = (EditText) findViewById(R.id.age);
         chip = (EditText) findViewById(R.id.chip);
         type = (EditText) findViewById(R.id.type);
-        date = (EditText) findViewById(R.id.date);
-        photo = (EditText) findViewById(R.id.photo);
+
         sendData=(Button) findViewById(R.id.sendData);
 
         mHelper = new DbHelper(this);
@@ -55,8 +53,8 @@ public class InsertAnimal extends AppCompatActivity {
                 String sAge=age.getText().toString();
                 String sChip=chip.getText().toString();
                 String sType=type.getText().toString();
-                String sDate=date.getText().toString();
-                String sPhoto=photo.getText().toString();
+        //        String sDate=date.getText().toString();
+        //        String sPhoto=photo.getText().toString();
 
 
 
@@ -64,11 +62,11 @@ public class InsertAnimal extends AppCompatActivity {
 
                 //Open connections to the database
                 mDb = mHelper.getWritableDatabase();
-                String[] columns = new String[]{"_id", DbHelper.COL_NAME, DbHelper.COL_DATE,DbHelper.COL_AGE};
+                String[] columns = new String[]{"_id", DbHelper.COL_NAME, DbHelper.COL_DATE,DbHelper.COL_AGE, DbHelper.COL_CHIP, DbHelper.COL_TYPE,DbHelper.COL_PHOTO};
                     //    ,DbHelper.COL_CHIP,DbHelper.COL_TYPE,DbHelper.COL_PHOTO};
                 mCursor = mDb.query(DbHelper.TABLE_NAME, columns, null, null, null, null, null, null);
                 //Refresh the list
-                String[] headers = new String[]{DbHelper.COL_NAME, DbHelper.COL_DATE,DbHelper.COL_AGE};
+                String[] headers = new String[]{DbHelper.COL_NAME, DbHelper.COL_DATE,DbHelper.COL_AGE, DbHelper.COL_CHIP, DbHelper.COL_TYPE,DbHelper.COL_PHOTO};
                      //   ,DbHelper.COL_CHIP,DbHelper.COL_TYPE,DbHelper.COL_PHOTO};
                 mAdapter = new SimpleCursorAdapter(InsertAnimal.this, android.R.layout.two_line_list_item,
                         mCursor, headers, new int[]{android.R.id.text1, android.R.id.text2});
@@ -86,9 +84,9 @@ public class InsertAnimal extends AppCompatActivity {
                 cv.put(DbHelper.COL_DATE, dateFormat.format(new Date())); //InsertAnimal 'now' as the date
 
                 cv.put(DbHelper.COL_AGE, sAge);
-          //      cv.put(DbHelper.COL_CHIP, sName);
-          //      cv.put(DbHelper.COL_TYPE, sName);
-          //      cv.put(DbHelper.COL_PHOTO, sName);
+                cv.put(DbHelper.COL_CHIP, sChip);
+                cv.put(DbHelper.COL_TYPE, sType);
+         //       cv.put(DbHelper.COL_PHOTO, sPhoto);
 
                 mDb.insert(DbHelper.TABLE_NAME, null, cv);
 

@@ -69,13 +69,13 @@ public class DatabaseActivity extends Activity  {
         mDb = mHelper.getWritableDatabase();
         // TODO add coloumn
         String[] columns = new String[]{
-                "_id", DbHelper.COL_NAME,   DbHelper.COL_DATE,DbHelper.COL_AGE};
-       //         DbHelper.COL_CHIP,          DbHelper.COL_TYPE,DbHelper.COL_PHOTO};
+                "_id", DbHelper.COL_NAME,   DbHelper.COL_DATE,DbHelper.COL_AGE,
+                DbHelper.COL_CHIP,          DbHelper.COL_TYPE,DbHelper.COL_PHOTO};
         mCursor = mDb.query(DbHelper.TABLE_NAME, columns, null, null, null, null, null, null);
         //Refresh the list
         // TODO add coloumn
-        String[] headers = new String[]{DbHelper.COL_NAME, DbHelper.COL_DATE,DbHelper.COL_AGE};
-//                DbHelper.COL_CHIP,DbHelper.COL_TYPE,DbHelper.COL_PHOTO};
+        String[] headers = new String[]{DbHelper.COL_NAME, DbHelper.COL_DATE,DbHelper.COL_AGE,
+                DbHelper.COL_CHIP,DbHelper.COL_TYPE,DbHelper.COL_PHOTO};
         mAdapter = new SimpleCursorAdapter(this, android.R.layout.two_line_list_item,
                 mCursor, headers, new int[]{android.R.id.text1, android.R.id.text2});
         mList.setAdapter(mAdapter);

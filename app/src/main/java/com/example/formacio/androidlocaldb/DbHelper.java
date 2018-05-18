@@ -29,7 +29,7 @@ public class DbHelper extends SQLiteOpenHelper{
     public static final String COL_PHOTO = "photo";
     private static final String STRING_CREATE =
             "CREATE TABLE " + TABLE_NAME + " (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + COL_NAME + " TEXT, " + COL_DATE + " DATE," + COL_AGE + " INTEGER"+
+                    + COL_NAME + " TEXT, " + COL_DATE + " DATE," + COL_AGE + " INTEGER,"+
                      COL_CHIP + " TEXT, " + COL_TYPE + " TEXT,"+ COL_PHOTO + " TEXT" +
                     ");";
 
@@ -48,7 +48,9 @@ public class DbHelper extends SQLiteOpenHelper{
         //Create a formatter for sql date format
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         cv.put(COL_DATE, dateFormat.format(new Date())); //InsertAnimal 'now' as the date
-        cv.put(COL_AGE, 7);
+        cv.put(COL_AGE, 8);
+        cv.put(COL_CHIP, "yes");
+        cv.put(COL_TYPE, "dog");
 
 
         db.insert(TABLE_NAME, null, cv);

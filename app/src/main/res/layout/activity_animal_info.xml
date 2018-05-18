@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:text="TextView"
         android:textAlignment="center"
-        android:textSize="30sp"/>
+        android:textSize="25sp"
+        android:textColor="#58FAF4"/>
 
     <TextView
         android:id="@+id/iAge"
@@ -22,7 +23,8 @@
         android:layout_height="wrap_content"
         android:text="TextView"
         android:textAlignment="center"
-        android:textSize="30sp"/>
+        android:textSize="25sp"
+        android:textColor="#58FAF4"/>
 
     <TextView
         android:id="@+id/iChip"
@@ -30,7 +32,8 @@
         android:layout_height="wrap_content"
         android:text="TextView"
         android:textAlignment="center"
-        android:textSize="30sp"/>
+        android:textSize="25sp"
+        android:textColor="#58FAF4"/>
 
     <TextView
         android:id="@+id/iType"
@@ -38,7 +41,8 @@
         android:layout_height="wrap_content"
         android:text="TextView"
         android:textAlignment="center"
-        android:textSize="30sp"/>
+        android:textSize="25sp"
+        android:textColor="#58FAF4"/>
 
     <TextView
         android:id="@+id/iDate"
@@ -46,7 +50,8 @@
         android:layout_height="wrap_content"
         android:text="TextView"
         android:textAlignment="center"
-        android:textSize="30sp"/>
+        android:textSize="18sp"
+        android:textColor="#58FAF4"/>
 
     <TextView
         android:id="@+id/iPhoto"
@@ -54,7 +59,8 @@
         android:layout_height="wrap_content"
         android:text="PHOTO"
         android:textAlignment="center"
-        android:textSize="30sp"/>
+        android:textSize="30sp"
+        android:textColor="#58FAF4"/>
 
     <Button
         android:id="@+id/iDelete"
