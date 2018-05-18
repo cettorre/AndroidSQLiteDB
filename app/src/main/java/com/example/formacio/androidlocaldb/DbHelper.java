@@ -38,7 +38,7 @@ public class DbHelper extends SQLiteOpenHelper{
 
         //You may also load initial values into the database here
         ContentValues cv = new ContentValues(2);
-        cv.put(COL_NAME, "John Doe");
+        cv.put(COL_NAME, "scooby dog");
         //Create a formatter for sql date format
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         cv.put(COL_DATE, dateFormat.format(new Date())); //InsertAnimal 'now' as the date

@@ -42,18 +42,18 @@ public class AnimalInfo extends AppCompatActivity {
         mCursor = mDb.query(DbHelper.TABLE_NAME, columns, null, null, null, null, null, null);
         mCursor.moveToPosition(pos);
         //Get the id value of this row
-        String rowId = mCursor.getString(0); //Column 0 of the cursor is the id
 
-        //read value>>>>>>>>>>>>>>
-        //mDb.delete(DbHelper.TABLE_NAME, "_id = ?", new String[]{rowId});
 
+        String name = mCursor.getString(mCursor.getColumnIndexOrThrow(DbHelper.COL_NAME));
+        Log.e("column",name);
+        
 
         //Refresh the list
         mCursor.requery();
 
 
 
-        iName.setText("scooby");
+        iName.setText(name);
 
 
       //end   *******************************************
