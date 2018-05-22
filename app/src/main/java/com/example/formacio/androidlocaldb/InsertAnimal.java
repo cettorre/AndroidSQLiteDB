@@ -4,11 +4,15 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 
 import java.text.SimpleDateFormat;
@@ -23,6 +27,9 @@ public class InsertAnimal extends AppCompatActivity {
 
 
     Button sendData;
+    Button takePhoto;
+
+    ImageView mImageView;
 
     DbHelper mHelper;
     SQLiteDatabase mDb;
@@ -41,8 +48,18 @@ public class InsertAnimal extends AppCompatActivity {
         type = (EditText) findViewById(R.id.type);
 
         sendData=(Button) findViewById(R.id.sendData);
+        takePhoto=findViewById(R.id.takePhoto);
+
+        mImageView=findViewById(R.id.photo);
 
         mHelper = new DbHelper(this);
+
+        takePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                capturePhoto("");
+            }
+        });
 
         sendData.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +114,39 @@ public class InsertAnimal extends AppCompatActivity {
         });
 
 
+    }
+
+    public void capturePhoto(String targetFilename) {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        //  intent.putExtra(MediaStore.EXTRA_OUTPUT,                 Uri.withAppendedPath(mLocationForPhotos, targetFilename));
+        //Attempt to invoke virtual method 'android.net.Uri$Builder android.net.Uri.buildUpon()' on a null object reference
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    static final Uri mLocationForPhotos= null;//>>asignar para guardar imagen
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+
+            //capture thumbnail from extra
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            mImageView.setImageBitmap(imageBitmap);
+
+            //        Bitmap thumbnail = data.getParcelable("data"); //cannot resolve method
+            // Do other work with full size photo saved in mLocationForPhotos
+
+
+            //get selected image and assign to mImageView after selectImage method
+            Uri fullPhotoUri = data.getData();
+            mImageView.setImageURI(fullPhotoUri);
+
+
+        }
     }
 
 

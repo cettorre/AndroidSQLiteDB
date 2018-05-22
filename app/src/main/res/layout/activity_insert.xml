@@ -11,7 +11,8 @@
         android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="name" />
+        android:hint="name"
+        android:layout_marginTop="80dp"/>
 
     <EditText
         android:id="@+id/age"
@@ -31,6 +32,18 @@
         android:layout_height="wrap_content"
         android:hint="type" />
 
+    <Button
+        android:id="@+id/takePhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="take photo"
+        android:layout_gravity="center"
+        />
+    <ImageView
+        android:id="@+id/photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
 
     <Button
         android:id="@+id/sendData"
