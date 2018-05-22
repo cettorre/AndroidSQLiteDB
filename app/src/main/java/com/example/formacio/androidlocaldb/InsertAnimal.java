@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -33,6 +35,8 @@ public class InsertAnimal extends AppCompatActivity {
     Button takePhoto;
 
     ImageView mImageView;
+    Uri photoUri = null;
+    File output;
 
     DbHelper mHelper;
     SQLiteDatabase mDb;
@@ -96,7 +100,6 @@ public class InsertAnimal extends AppCompatActivity {
                 ContentValues cv = new ContentValues(2);
 
                 //todo add value to DB
-
                 cv.put(DbHelper.COL_NAME, sName);
 
                 //Create a formatter for SQL date format
@@ -117,6 +120,17 @@ public class InsertAnimal extends AppCompatActivity {
         });
 
 
+
+//TODO  ***************************
+        if (savedInstanceState == null){
+            File dir = getExternalFilesDir(Environment.DIRECTORY_DCIM);
+            dir.mkdirs();
+            output = new File(dir,"com.example.formacio.androidlocaldb.foto1.jpg");
+        } else {
+            output = (File)savedInstanceState.getSerializable("foto1");
+        }
+        //*************************
+
     }
 
     public void capturePhoto(String targetFilename) {
@@ -124,9 +138,16 @@ public class InsertAnimal extends AppCompatActivity {
         //  intent.putExtra(MediaStore.EXTRA_OUTPUT,                 Uri.withAppendedPath(mLocationForPhotos, targetFilename));
         //Attempt to invoke virtual method 'android.net.Uri$Builder android.net.Uri.buildUpon()' on a null object reference
 
+//*********TODO
+        photoUri = Uri.fromFile(output);
+        //The name of the Intent-extra used to indicate a content resolver Uri to be used to store the requested image or video.
+     //   intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+    //    startActivityForResult(intent,10);//different req code
+//*********
         if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+                 startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
         }
+
     }
 
     private String convertToBase64(String imagePath)    {
@@ -139,7 +160,7 @@ public class InsertAnimal extends AppCompatActivity {
     }
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
-    static final Uri mLocationForPhotos= null;//>>asignar para guardar imagen
+    static final Uri mLocationForPhotos= null;//>>asignar para guardar imagen todo
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
@@ -155,7 +176,7 @@ public class InsertAnimal extends AppCompatActivity {
 
             //get selected image and assign to mImageView after selectImage method
             Uri fullPhotoUri = data.getData();
-            mImageView.setImageURI(fullPhotoUri);
+   //         mImageView.setImageURI(fullPhotoUri);
 
 
         }
