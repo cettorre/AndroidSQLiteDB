@@ -5,6 +5,7 @@ package com.example.formacio.androidlocaldb;
         import android.content.Intent;
         import android.database.Cursor;
         import android.database.sqlite.SQLiteDatabase;
+        import android.graphics.Color;
         import android.os.Bundle;
         import android.view.View;
         import android.widget.AdapterView;
@@ -12,6 +13,8 @@ package com.example.formacio.androidlocaldb;
         import android.widget.EditText;
         import android.widget.ListView;
         import android.widget.SimpleCursorAdapter;
+        import android.widget.TextView;
+
         import java.text.SimpleDateFormat;
         import java.util.Date;
 
@@ -78,6 +81,23 @@ public class DatabaseActivity extends Activity  {
                 DbHelper.COL_CHIP,DbHelper.COL_TYPE,DbHelper.COL_PHOTO};
         mAdapter = new SimpleCursorAdapter(this, android.R.layout.two_line_list_item,
                 mCursor, headers, new int[]{android.R.id.text1, android.R.id.text2});
+
+        mAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
+            public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
+                if(columnIndex == 1) {
+                    TextView text = (TextView) view;  // get your View
+                    text.setText(mCursor.getString(mCursor.getColumnIndexOrThrow(DbHelper.COL_NAME)));
+                    text.setTextColor(Color.rgb(0,255,255));
+                    text.setTextSize(24);
+                    if(mCursor.getString(mCursor.getColumnIndexOrThrow(DbHelper.COL_CHIP)).toString().equalsIgnoreCase("yes"))
+                        text.setTextColor(Color.BLUE);
+                }
+                return false;
+            }
+        });
+
+
+
         mList.setAdapter(mAdapter);
 
 
