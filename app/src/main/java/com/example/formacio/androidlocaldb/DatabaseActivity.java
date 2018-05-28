@@ -87,10 +87,10 @@ public class DatabaseActivity extends Activity  {
                 if(columnIndex == 1) {
                     TextView text = (TextView) view;  // get your View
                     text.setText(mCursor.getString(mCursor.getColumnIndexOrThrow(DbHelper.COL_NAME)));
-                    text.setTextColor(Color.rgb(0,255,255));
+                   // text.setTextColor(Color.rgb(0,255,255));
                     text.setTextSize(24);
-                    if(mCursor.getString(mCursor.getColumnIndexOrThrow(DbHelper.COL_CHIP)).toString().equalsIgnoreCase("yes"))
-                        text.setTextColor(Color.BLUE);
+                    if(mCursor.getInt(mCursor.getColumnIndexOrThrow(DbHelper.COL_CHIP))==1)
+                        text.setTextColor(Color.rgb(0,255,255));
                 }
                 return false;
             }

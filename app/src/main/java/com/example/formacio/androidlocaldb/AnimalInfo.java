@@ -69,8 +69,8 @@ public class AnimalInfo extends AppCompatActivity {
         int age = mCursor.getInt(mCursor.getColumnIndexOrThrow(DbHelper.COL_AGE));
         Log.e("column2",String.valueOf(age));
 
-        String chip = mCursor.getString(mCursor.getColumnIndexOrThrow(DbHelper.COL_CHIP));
-        Log.e("column",chip);
+        String chip = (mCursor.getInt(mCursor.getColumnIndexOrThrow(DbHelper.COL_CHIP))==1)?"yes":"no";
+        Log.e("chip",chip);
 
         String type = mCursor.getString(mCursor.getColumnIndexOrThrow(DbHelper.COL_TYPE));
         Log.e("column",type);

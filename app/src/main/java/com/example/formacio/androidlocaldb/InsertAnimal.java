@@ -16,6 +16,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
@@ -30,8 +31,10 @@ public class InsertAnimal extends AppCompatActivity {
 
     EditText name;
     EditText age;
-    EditText chip;
+    //EditText chip;
     EditText type;
+    CheckBox hasChip;
+    int iChip;
 
 
     Button sendData;
@@ -58,8 +61,9 @@ public class InsertAnimal extends AppCompatActivity {
 
         name = (EditText) findViewById(R.id.name);
         age = (EditText) findViewById(R.id.age);
-        chip = (EditText) findViewById(R.id.chip);
+       // chip = (EditText) findViewById(R.id.chip);
         type = (EditText) findViewById(R.id.type);
+        hasChip=findViewById(R.id.hasChip);
 
         sendData=(Button) findViewById(R.id.sendData);
         takePhoto=findViewById(R.id.takePhoto);
@@ -85,7 +89,7 @@ public class InsertAnimal extends AppCompatActivity {
 
                 String sName=name.getText().toString();
                 String sAge=age.getText().toString();
-                String sChip=chip.getText().toString();
+              //  String sChip=chip.getText().toString();
                 String sType=type.getText().toString();
         //        String sDate=date.getText().toString();
         //        String sPhoto=photo.getText().toString();
@@ -117,8 +121,14 @@ public class InsertAnimal extends AppCompatActivity {
                 cv.put(DbHelper.COL_DATE, dateFormat.format(new Date())); //InsertAnimal 'now' as the date
 
                 cv.put(DbHelper.COL_AGE, sAge);
-                cv.put(DbHelper.COL_CHIP, sChip);
+             //   cv.put(DbHelper.COL_CHIP, sChip);
                 cv.put(DbHelper.COL_TYPE, sType);
+                if(hasChip.isChecked()){
+                    cv.put(DbHelper.COL_CHIP,1);
+                }else {
+                    cv.put(DbHelper.COL_CHIP,0);
+                }
+
          //       cv.put(DbHelper.COL_PHOTO, sPhoto);
 
                 mDb.insert(DbHelper.TABLE_NAME, null, cv);

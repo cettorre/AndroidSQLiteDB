@@ -30,7 +30,7 @@ public class DbHelper extends SQLiteOpenHelper{
     private static final String STRING_CREATE =
             "CREATE TABLE " + TABLE_NAME + " (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + COL_NAME + " TEXT, " + COL_DATE + " DATE," + COL_AGE + " INTEGER,"+
-                     COL_CHIP + " TEXT, " + COL_TYPE + " TEXT,"+ COL_PHOTO + " TEXT" +
+                     COL_CHIP + " INTEGER, " + COL_TYPE + " TEXT,"+ COL_PHOTO + " TEXT" +
                     ");";
 
     public DbHelper(Context context) {

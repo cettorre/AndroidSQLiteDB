@@ -20,17 +20,18 @@
         android:layout_height="wrap_content"
         android:hint="age" />
 
-    <EditText
-        android:id="@+id/chip"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="chip" />
 
     <EditText
         android:id="@+id/type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="type" />
+
+    <CheckBox
+        android:id="@+id/hasChip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="chip" />
 
     <Button
         android:id="@+id/takePhoto"
