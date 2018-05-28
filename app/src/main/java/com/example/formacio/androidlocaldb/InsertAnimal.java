@@ -2,8 +2,6 @@ package com.example.formacio.androidlocaldb;
 
 import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -19,19 +17,20 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.SimpleCursorAdapter;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static com.example.formacio.androidlocaldb.DatabaseActivity.mCursor;
+import static com.example.formacio.androidlocaldb.DatabaseActivity.mHelper;
+import static com.example.formacio.androidlocaldb.DatabaseActivity.mDb;
+
 public class InsertAnimal extends AppCompatActivity {
 
     EditText name;
     EditText age;
-    //EditText chip;
     EditText type;
     CheckBox hasChip;
     int iChip;
@@ -43,15 +42,6 @@ public class InsertAnimal extends AppCompatActivity {
     ImageView mImageView;
     Uri photoUri = null;
 
-    Bitmap bm;
-    String encodedImageB64;
-
-
-
-    static DbHelper mHelper;
-    static SQLiteDatabase mDb;
-    static Cursor mCursor;
-    static SimpleCursorAdapter mAdapter;
     static ContentValues cv;
 
 
@@ -62,7 +52,6 @@ public class InsertAnimal extends AppCompatActivity {
 
         name = (EditText) findViewById(R.id.name);
         age = (EditText) findViewById(R.id.age);
-       // chip = (EditText) findViewById(R.id.chip);
         type = (EditText) findViewById(R.id.type);
         hasChip=findViewById(R.id.hasChip);
 
@@ -90,13 +79,8 @@ public class InsertAnimal extends AppCompatActivity {
         //Open connections to the database
         mDb = mHelper.getWritableDatabase();
         String[] columns = new String[]{"_id", DbHelper.COL_NAME, DbHelper.COL_DATE,DbHelper.COL_AGE, DbHelper.COL_CHIP, DbHelper.COL_TYPE,DbHelper.COL_PHOTO};
-        //    ,DbHelper.COL_CHIP,DbHelper.COL_TYPE,DbHelper.COL_PHOTO};
         mCursor = mDb.query(DbHelper.TABLE_NAME, columns, null, null, null, null, null, null);
         //Refresh the list
-        String[] headers = new String[]{DbHelper.COL_NAME, DbHelper.COL_DATE,DbHelper.COL_AGE, DbHelper.COL_CHIP, DbHelper.COL_TYPE,DbHelper.COL_PHOTO};
-        //   ,DbHelper.COL_CHIP,DbHelper.COL_TYPE,DbHelper.COL_PHOTO};
-        mAdapter = new SimpleCursorAdapter(InsertAnimal.this, android.R.layout.two_line_list_item,
-                mCursor, headers, new int[]{android.R.id.text1, android.R.id.text2});
 
 
         //Add a new value to the database
@@ -110,22 +94,15 @@ public class InsertAnimal extends AppCompatActivity {
 
                 String sName=name.getText().toString();
                 String sAge=age.getText().toString();
-              //  String sChip=chip.getText().toString();
                 String sType=type.getText().toString();
-        //        String sDate=date.getText().toString();
-        //        String sPhoto=photo.getText().toString();
 
 
 
                 //todo add value to DB
-                cv.put(DbHelper.COL_NAME, sName);
-
-                //Create a formatter for SQL date format
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                cv.put(DbHelper.COL_NAME, sName);
                 cv.put(DbHelper.COL_DATE, dateFormat.format(new Date())); //InsertAnimal 'now' as the date
-
                 cv.put(DbHelper.COL_AGE, sAge);
-             //   cv.put(DbHelper.COL_CHIP, sChip);
                 cv.put(DbHelper.COL_TYPE, sType);
                 if(hasChip.isChecked()){
                     cv.put(DbHelper.COL_CHIP,1);
@@ -133,11 +110,7 @@ public class InsertAnimal extends AppCompatActivity {
                     cv.put(DbHelper.COL_CHIP,0);
                 }
 
-         //       cv.put(DbHelper.COL_PHOTO, sPhoto);
-
                 mDb.insert(DbHelper.TABLE_NAME, null, cv);
-
-
 
                 startActivity(i);
             }
@@ -165,8 +138,6 @@ public class InsertAnimal extends AppCompatActivity {
                 photoFile = createImageFile();
             } catch (IOException ex) {
                 ex.printStackTrace();
-                // Error occurred while creating the File
-
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
@@ -197,13 +168,8 @@ public class InsertAnimal extends AppCompatActivity {
         mCurrentPhotoPath = image.getAbsolutePath();
         Log.e("photo_path", mCurrentPhotoPath);
 
-       // String encoded = Base64.encodeFromFile("data/inputImage.png");
-
-   //     encodedImageB64=convertToBase64(mCurrentPhotoPath);
-   //     Log.e("encoded_image",encodedImageB64);
 
         return image;
-
 
     }
 
@@ -214,18 +180,9 @@ public class InsertAnimal extends AppCompatActivity {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
 
             mImageView.setImageURI(photoUri);
-
             String encodedImage=  InsertAnimal.convertToBase64(mCurrentPhotoPath);
             Log.e("encoded_image1",encodedImage);
-       //     mDb = mHelper.getWritableDatabase();
-
-       //     String[] columns = new String[]{"_id", DbHelper.COL_NAME, DbHelper.COL_DATE,DbHelper.COL_AGE, DbHelper.COL_CHIP, DbHelper.COL_TYPE,DbHelper.COL_PHOTO};
-
-       //     mCursor = mDb.query(DbHelper.TABLE_NAME, columns, null, null, null, null, null, null);
-       //     cv = new ContentValues(2);
             cv.put(DbHelper.COL_PHOTO, encodedImage);
-            mDb.insert(DbHelper.TABLE_NAME, null, cv);
-
        }
     }
 
@@ -238,10 +195,7 @@ public class InsertAnimal extends AppCompatActivity {
         byte[] byteArrayImage = baos.toByteArray();
         String encodedImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
         return encodedImage;
-
-
     }
-
 
 
 

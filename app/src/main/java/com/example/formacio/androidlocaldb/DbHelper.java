@@ -47,13 +47,13 @@ public class DbHelper extends SQLiteOpenHelper{
         cv.put(COL_NAME, "scooby dog");
         //Create a formatter for sql date format
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        cv.put(COL_DATE, dateFormat.format(new Date())); //InsertAnimal 'now' as the date
-        cv.put(COL_AGE, 8);
-        cv.put(COL_CHIP, "yes");
-        cv.put(COL_TYPE, "dog");
+       // cv.put(COL_DATE, dateFormat.format(new Date())); //InsertAnimal 'now' as the date
+       // cv.put(COL_AGE, 8);
+       // cv.put(COL_CHIP, "yes");
+       // cv.put(COL_TYPE, "dog");
 
 
-        db.insert(TABLE_NAME, null, cv);
+     //   db.insert(TABLE_NAME, null, cv);
     }
 
     @Override

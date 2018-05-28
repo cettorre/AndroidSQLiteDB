@@ -25,10 +25,10 @@ public class DatabaseActivity extends Activity  {
 
     ListView mList;
 
-    DbHelper mHelper;
-    SQLiteDatabase mDb;
-    Cursor mCursor;
-    SimpleCursorAdapter mAdapter;
+   static DbHelper mHelper;
+    static SQLiteDatabase mDb;
+    static Cursor mCursor;
+    static SimpleCursorAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
