@@ -62,6 +62,14 @@
         android:textSize="30sp"
         android:textColor="#58FAF4"/>
 
+<ImageButton
+    android:id="@+id/aPhoto"
+    android:layout_width="wrap_content"
+    android:layout_height="200dp"
+    android:layout_gravity="center"
+    />
+
+
     <Button
         android:id="@+id/iDelete"
         android:layout_width="match_parent"

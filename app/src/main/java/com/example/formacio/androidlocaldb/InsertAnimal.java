@@ -48,10 +48,11 @@ public class InsertAnimal extends AppCompatActivity {
 
 
 
-    DbHelper mHelper;
-    SQLiteDatabase mDb;
-    Cursor mCursor;
-    SimpleCursorAdapter mAdapter;
+    static DbHelper mHelper;
+    static SQLiteDatabase mDb;
+    static Cursor mCursor;
+    static SimpleCursorAdapter mAdapter;
+    static ContentValues cv;
 
 
     @Override
@@ -82,6 +83,26 @@ public class InsertAnimal extends AppCompatActivity {
             }
         });
 
+
+
+        //WRITE ON DB
+
+        //Open connections to the database
+        mDb = mHelper.getWritableDatabase();
+        String[] columns = new String[]{"_id", DbHelper.COL_NAME, DbHelper.COL_DATE,DbHelper.COL_AGE, DbHelper.COL_CHIP, DbHelper.COL_TYPE,DbHelper.COL_PHOTO};
+        //    ,DbHelper.COL_CHIP,DbHelper.COL_TYPE,DbHelper.COL_PHOTO};
+        mCursor = mDb.query(DbHelper.TABLE_NAME, columns, null, null, null, null, null, null);
+        //Refresh the list
+        String[] headers = new String[]{DbHelper.COL_NAME, DbHelper.COL_DATE,DbHelper.COL_AGE, DbHelper.COL_CHIP, DbHelper.COL_TYPE,DbHelper.COL_PHOTO};
+        //   ,DbHelper.COL_CHIP,DbHelper.COL_TYPE,DbHelper.COL_PHOTO};
+        mAdapter = new SimpleCursorAdapter(InsertAnimal.this, android.R.layout.two_line_list_item,
+                mCursor, headers, new int[]{android.R.id.text1, android.R.id.text2});
+
+
+        //Add a new value to the database
+        cv = new ContentValues(2);
+
+
         sendData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,23 +116,6 @@ public class InsertAnimal extends AppCompatActivity {
         //        String sPhoto=photo.getText().toString();
 
 
-
-                //WRITE ON DB
-
-                //Open connections to the database
-                mDb = mHelper.getWritableDatabase();
-                String[] columns = new String[]{"_id", DbHelper.COL_NAME, DbHelper.COL_DATE,DbHelper.COL_AGE, DbHelper.COL_CHIP, DbHelper.COL_TYPE,DbHelper.COL_PHOTO};
-                    //    ,DbHelper.COL_CHIP,DbHelper.COL_TYPE,DbHelper.COL_PHOTO};
-                mCursor = mDb.query(DbHelper.TABLE_NAME, columns, null, null, null, null, null, null);
-                //Refresh the list
-                String[] headers = new String[]{DbHelper.COL_NAME, DbHelper.COL_DATE,DbHelper.COL_AGE, DbHelper.COL_CHIP, DbHelper.COL_TYPE,DbHelper.COL_PHOTO};
-                     //   ,DbHelper.COL_CHIP,DbHelper.COL_TYPE,DbHelper.COL_PHOTO};
-                mAdapter = new SimpleCursorAdapter(InsertAnimal.this, android.R.layout.two_line_list_item,
-                        mCursor, headers, new int[]{android.R.id.text1, android.R.id.text2});
-
-
-                //Add a new value to the database
-                ContentValues cv = new ContentValues(2);
 
                 //todo add value to DB
                 cv.put(DbHelper.COL_NAME, sName);
@@ -212,7 +216,15 @@ public class InsertAnimal extends AppCompatActivity {
             mImageView.setImageURI(photoUri);
 
             String encodedImage=  InsertAnimal.convertToBase64(mCurrentPhotoPath);
-            Log.e("encoded_image",encodedImage);
+            Log.e("encoded_image1",encodedImage);
+       //     mDb = mHelper.getWritableDatabase();
+
+       //     String[] columns = new String[]{"_id", DbHelper.COL_NAME, DbHelper.COL_DATE,DbHelper.COL_AGE, DbHelper.COL_CHIP, DbHelper.COL_TYPE,DbHelper.COL_PHOTO};
+
+       //     mCursor = mDb.query(DbHelper.TABLE_NAME, columns, null, null, null, null, null, null);
+       //     cv = new ContentValues(2);
+            cv.put(DbHelper.COL_PHOTO, encodedImage);
+            mDb.insert(DbHelper.TABLE_NAME, null, cv);
 
        }
     }

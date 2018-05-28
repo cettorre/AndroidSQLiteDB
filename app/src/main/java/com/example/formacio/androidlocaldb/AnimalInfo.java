@@ -11,6 +11,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class AnimalInfo extends AppCompatActivity {
@@ -24,7 +25,8 @@ public class AnimalInfo extends AppCompatActivity {
     TextView iAge;
     TextView iChip;
     TextView iType;
-    TextView iPhoto;
+    //TextView iPhoto;
+    ImageButton aPhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +38,21 @@ public class AnimalInfo extends AppCompatActivity {
         iAge= findViewById(R.id.iAge);
         iChip= findViewById(R.id.iChip);
         iType= findViewById(R.id.iType);
-        iPhoto= findViewById(R.id.iPhoto);
+    //    iPhoto= findViewById(R.id.iPhoto);
+        aPhoto=findViewById(R.id.aPhoto);
+        aPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(AnimalInfo.this,ShowPhoto.class);
+                startActivity(i);
+
+
+            }
+        });
 
         delBtn=(Button) findViewById(R.id.iDelete);
 
-        mHelper = new DbHelper(this);
+
 
 
        //TODO read selected record from DB**************
@@ -49,6 +61,8 @@ public class AnimalInfo extends AppCompatActivity {
         int pos = i.getIntExtra("position",2);
         Log.e("position",String.valueOf(pos));
 
+
+        mHelper = new DbHelper(this);
         //Open connections to the database
         mDb = mHelper.getWritableDatabase();
         // TODO add coloumn
@@ -76,7 +90,10 @@ public class AnimalInfo extends AppCompatActivity {
         Log.e("column",type);
 
         String photo = mCursor.getString(mCursor.getColumnIndexOrThrow(DbHelper.COL_PHOTO));
-  //      Log.e("column4",photo);
+
+        Log.e("column_photo",photo);
+
+        aPhoto.setImageBitmap(decodeFromBase64ToBitmap(photo));
 
 
 
@@ -91,6 +108,7 @@ public class AnimalInfo extends AppCompatActivity {
         iAge.setText("age: "+String.valueOf(age));
         iChip.setText("chip: "+chip);
         iType.setText("type: "+type);
+     //   iPhoto.setText(photo);
         //iPhoto.setText(photo);
 
 
@@ -138,7 +156,7 @@ public class AnimalInfo extends AppCompatActivity {
 
     }
 
-    private Bitmap decodeFromBase64ToBitmap(String encodedImage) {
+ static public Bitmap decodeFromBase64ToBitmap(String encodedImage) {
         byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         return decodedByte;
