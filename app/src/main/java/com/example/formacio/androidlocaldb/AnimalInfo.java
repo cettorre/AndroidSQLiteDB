@@ -25,6 +25,7 @@ public class AnimalInfo extends AppCompatActivity {
     TextView iChip;
     TextView iType;
     ImageButton aPhoto;
+    static int positionList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +56,12 @@ public class AnimalInfo extends AppCompatActivity {
        // read selected record from DB**************
 
         Intent i = getIntent();
-        int pos = i.getIntExtra("position",2);
+        int pos = i.getIntExtra("position",1);
+        positionList=pos;
         Log.e("position",String.valueOf(pos));
 
 
-        mHelper = new DbHelper(this);
+    //    mHelper = new DbHelper(this);
         //Open connections to the database
         mDb = mHelper.getWritableDatabase();
         String[] columns = new String[]{"_id", DbHelper.COL_NAME, DbHelper.COL_DATE,DbHelper.COL_AGE, DbHelper.COL_CHIP, DbHelper.COL_TYPE,DbHelper.COL_PHOTO};
@@ -79,9 +81,11 @@ public class AnimalInfo extends AppCompatActivity {
         Log.e("column",type);
         String photo = mCursor.getString(mCursor.getColumnIndexOrThrow(DbHelper.COL_PHOTO));
 
-        if(!photo.equals("")||photo==null) {
-            Log.e("column_photo", photo);
+        if(photo!=null) {
+   //         Log.e("column_photo", photo);
             aPhoto.setImageBitmap(decodeFromBase64ToBitmap(photo));
+        }else {
+            aPhoto.setBackgroundResource(R.drawable.no_pic);
         }
 
 

@@ -9,6 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Add New Animal"
+        android:background="@color/colorAccent"
+        android:layout_margin="10dp"
         />
 
     <ListView

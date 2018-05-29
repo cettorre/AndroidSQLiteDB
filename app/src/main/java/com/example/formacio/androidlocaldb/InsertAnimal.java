@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -93,7 +95,14 @@ public class InsertAnimal extends AppCompatActivity {
                 Intent i = new Intent(InsertAnimal.this,DatabaseActivity.class);
 
                 String sName=name.getText().toString();
-                String sAge=age.getText().toString();
+                String sAge="";
+
+                try {
+                    int intAge=Integer.parseInt(age.getText().toString());
+                     sAge=age.getText().toString();
+                    Log.i("stringAge",sAge+" is a number");
+
+
                 String sType=type.getText().toString();
 
 
@@ -113,6 +122,11 @@ public class InsertAnimal extends AppCompatActivity {
                 mDb.insert(DbHelper.TABLE_NAME, null, cv);
 
                 startActivity(i);
+                } catch (NumberFormatException e) {
+                    Log.i("stringAge",sAge+" is not a number");
+                    Toast t=Toast.makeText(InsertAnimal.this,sAge+"is not a valid age",Toast.LENGTH_LONG);
+                    t.show();
+                }
             }
         });
 
