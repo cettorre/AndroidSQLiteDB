@@ -4,6 +4,7 @@ package com.example.formacio.androidlocaldb;
         import android.content.ContentValues;
         import android.content.Intent;
         import android.database.Cursor;
+        import android.database.CursorWindow;
         import android.database.sqlite.SQLiteDatabase;
         import android.graphics.Color;
         import android.os.Bundle;
@@ -15,6 +16,7 @@ package com.example.formacio.androidlocaldb;
         import android.widget.SimpleCursorAdapter;
         import android.widget.TextView;
 
+        import java.lang.reflect.Field;
         import java.text.SimpleDateFormat;
         import java.util.Date;
 
@@ -76,6 +78,28 @@ public class DatabaseActivity extends Activity  {
                 DbHelper.COL_CHIP,          DbHelper.COL_TYPE,DbHelper.COL_PHOTO};
         mCursor = mDb.query(DbHelper.TABLE_NAME, columns, null, null, null, null, null, null);
         //Refresh the list
+
+        //*****************************************
+
+        /*this fix is necessary for android 5.1. Android 6 does not need it.
+        In Android 5.1 stored photo exceeds the maximum size allowed
+        https://github.com/wallabag/android-app/issues/413
+        */
+        Field field = null;
+        try {
+            field = CursorWindow.class.getDeclaredField("sCursorWindowSize");
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+        field.setAccessible(true);
+        try {
+            field.set(null, 10240 * 1024);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        //****************************************
+
         // TODO add coloumn
         String[] headers = new String[]{DbHelper.COL_NAME, DbHelper.COL_DATE,DbHelper.COL_AGE,
                 DbHelper.COL_CHIP,DbHelper.COL_TYPE,DbHelper.COL_PHOTO};
