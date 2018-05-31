@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import com.example.formacio.androidlocaldb.R;
 import com.example.formacio.androidlocaldb.persistence.DbHelper;
 
-import static com.example.formacio.androidlocaldb.view.DatabaseActivity.mCursor;
+import static com.example.formacio.androidlocaldb.persistence.DbUtil.mCursor;
 import static com.example.formacio.androidlocaldb.view.AnimalInfo.positionList;
 
 public class ShowPhoto extends AppCompatActivity {

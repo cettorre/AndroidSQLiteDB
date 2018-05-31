@@ -11,16 +11,13 @@ public class DbUtil {
 
 
     static DbHelper mHelper;
-    static SQLiteDatabase mDb;
-    static Cursor mCursor;
-    static SimpleCursorAdapter mAdapter;
+    public static SQLiteDatabase mDb;
+   public static Cursor mCursor;
+    public static SimpleCursorAdapter mAdapter;
     static ContentValues cv;
 
 
-
-
-
-
+        //puedo utilizar getApplicationContext???
     public static SQLiteDatabase getDbConnection(Context context){
         mHelper = new DbHelper(context);
         mDb = mHelper.getWritableDatabase();
@@ -39,8 +36,18 @@ public class DbUtil {
                 .query(DbHelper.TABLE_NAME, columns,
                         null, null, null, null, null, null);
 
-
         return mCursor;
+    }
+
+    public static SimpleCursorAdapter getSimpleCursorAdapter(Context context){
+
+        String[] headers = new String[]{DbHelper.COL_NAME, DbHelper.COL_DATE,DbHelper.COL_AGE,
+                DbHelper.COL_CHIP,DbHelper.COL_TYPE,DbHelper.COL_PHOTO};
+
+        mAdapter = new SimpleCursorAdapter(context, android.R.layout.two_line_list_item,
+                mCursor, headers, new int[]{android.R.id.text1, android.R.id.text2});
+
+        return mAdapter;
     }
 
 

@@ -20,7 +20,7 @@
         </provider>
 
         <activity
-            android:name=".view.DatabaseActivity"
+            android:name=".view.MainActivity"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

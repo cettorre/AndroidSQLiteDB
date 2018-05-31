@@ -14,10 +14,10 @@ import android.widget.TextView;
 
 import com.example.formacio.androidlocaldb.R;
 import com.example.formacio.androidlocaldb.persistence.DbHelper;
+import com.example.formacio.androidlocaldb.persistence.DbUtil;
 
-import static com.example.formacio.androidlocaldb.view.DatabaseActivity.mCursor;
-import static com.example.formacio.androidlocaldb.view.DatabaseActivity.mHelper;
-import static com.example.formacio.androidlocaldb.view.DatabaseActivity.mDb;
+import static com.example.formacio.androidlocaldb.view.MainActivity.mCursor;
+import static com.example.formacio.androidlocaldb.view.MainActivity.mDb;
 
 public class AnimalInfo extends AppCompatActivity {
 
@@ -56,19 +56,16 @@ public class AnimalInfo extends AppCompatActivity {
 
 
 
-       // read selected record from DB**************
-
+       // read selected record from List DB**************
         Intent i = getIntent();
         int pos = i.getIntExtra("position",1);
         positionList=pos;
         Log.e("position",String.valueOf(pos));
 
 
-    //    mHelper = new DbHelper(this);
-        //Open connections to the database
-        mDb = mHelper.getWritableDatabase();
-        String[] columns = new String[]{"_id", DbHelper.COL_NAME, DbHelper.COL_DATE,DbHelper.COL_AGE, DbHelper.COL_CHIP, DbHelper.COL_TYPE,DbHelper.COL_PHOTO};
-        mCursor = mDb.query(DbHelper.TABLE_NAME, columns, null, null, null, null, null, null);
+
+        mDb = DbUtil.getDbConnection(this);
+        mCursor= DbUtil.getCursor(this,mDb);
         mCursor.moveToPosition(pos);
 
         //Get the id value of this row
@@ -121,7 +118,7 @@ public class AnimalInfo extends AppCompatActivity {
                 //Refresh the list
                 mCursor.requery();
 
-                Intent i2 = new Intent(AnimalInfo.this, DatabaseActivity.class);
+                Intent i2 = new Intent(AnimalInfo.this, MainActivity.class);
                 startActivity(i2);
 
 

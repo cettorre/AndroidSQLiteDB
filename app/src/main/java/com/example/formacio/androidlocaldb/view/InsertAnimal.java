@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.formacio.androidlocaldb.R;
 import com.example.formacio.androidlocaldb.persistence.DbHelper;
+import com.example.formacio.androidlocaldb.persistence.DbUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -28,9 +29,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static com.example.formacio.androidlocaldb.view.DatabaseActivity.mCursor;
-import static com.example.formacio.androidlocaldb.view.DatabaseActivity.mHelper;
-import static com.example.formacio.androidlocaldb.view.DatabaseActivity.mDb;
+import static com.example.formacio.androidlocaldb.view.MainActivity.mCursor;
+import static com.example.formacio.androidlocaldb.view.MainActivity.mDb;
 
 public class InsertAnimal extends AppCompatActivity {
 
@@ -65,7 +65,6 @@ public class InsertAnimal extends AppCompatActivity {
 
         mImageView=findViewById(R.id.photo);
 
-        mHelper = new DbHelper(this);
 
         takePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,20 +81,16 @@ public class InsertAnimal extends AppCompatActivity {
         //WRITE ON DB
 
         //Open connections to the database
-        mDb = mHelper.getWritableDatabase();
-        String[] columns = new String[]{"_id", DbHelper.COL_NAME, DbHelper.COL_DATE,DbHelper.COL_AGE, DbHelper.COL_CHIP, DbHelper.COL_TYPE,DbHelper.COL_PHOTO};
-        mCursor = mDb.query(DbHelper.TABLE_NAME, columns, null, null, null, null, null, null);
-        //Refresh the list
-
-
+        mDb = DbUtil.getDbConnection(getApplicationContext());
+        mCursor=DbUtil.getCursor(this,mDb);
         //Add a new value to the database
-        cv = new ContentValues(2);
+        cv = DbUtil.getContentValues();
 
 
         sendData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(InsertAnimal.this,DatabaseActivity.class);
+                Intent i = new Intent(InsertAnimal.this,MainActivity.class);
 
                 String sName=name.getText().toString();
                 String sAge="";
