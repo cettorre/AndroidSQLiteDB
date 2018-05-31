@@ -1,4 +1,4 @@
-package com.example.formacio.androidlocaldb;
+package com.example.formacio.androidlocaldb.view;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -19,15 +19,18 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.formacio.androidlocaldb.R;
+import com.example.formacio.androidlocaldb.persistence.DbHelper;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static com.example.formacio.androidlocaldb.DatabaseActivity.mCursor;
-import static com.example.formacio.androidlocaldb.DatabaseActivity.mHelper;
-import static com.example.formacio.androidlocaldb.DatabaseActivity.mDb;
+import static com.example.formacio.androidlocaldb.view.DatabaseActivity.mCursor;
+import static com.example.formacio.androidlocaldb.view.DatabaseActivity.mHelper;
+import static com.example.formacio.androidlocaldb.view.DatabaseActivity.mDb;
 
 public class InsertAnimal extends AppCompatActivity {
 

@@ -1,17 +1,15 @@
-package com.example.formacio.androidlocaldb;
+package com.example.formacio.androidlocaldb.view;
 
-import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
-import static com.example.formacio.androidlocaldb.DatabaseActivity.mCursor;
-import static com.example.formacio.androidlocaldb.DatabaseActivity.mHelper;
-import static com.example.formacio.androidlocaldb.DatabaseActivity.mDb;
-import static com.example.formacio.androidlocaldb.AnimalInfo.positionList;
+
+import com.example.formacio.androidlocaldb.R;
+import com.example.formacio.androidlocaldb.persistence.DbHelper;
+
+import static com.example.formacio.androidlocaldb.view.DatabaseActivity.mCursor;
+import static com.example.formacio.androidlocaldb.view.AnimalInfo.positionList;
 
 public class ShowPhoto extends AppCompatActivity {
 

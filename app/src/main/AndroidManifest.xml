@@ -20,7 +20,7 @@
         </provider>
 
         <activity
-            android:name=".DatabaseActivity"
+            android:name=".view.DatabaseActivity"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,12 +29,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".InsertAnimal"
+            android:name=".view.InsertAnimal"
           />
         <activity
-            android:name=".AnimalInfo"
+            android:name=".view.AnimalInfo"
            />
-        <activity android:name=".ShowPhoto"></activity>
+        <activity android:name=".view.ShowPhoto"></activity>
     </application>
 
 </manifest>

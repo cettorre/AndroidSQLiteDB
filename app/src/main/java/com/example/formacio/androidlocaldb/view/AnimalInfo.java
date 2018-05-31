@@ -1,4 +1,4 @@
-package com.example.formacio.androidlocaldb;
+package com.example.formacio.androidlocaldb.view;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,9 +12,12 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import static com.example.formacio.androidlocaldb.DatabaseActivity.mCursor;
-import static com.example.formacio.androidlocaldb.DatabaseActivity.mHelper;
-import static com.example.formacio.androidlocaldb.DatabaseActivity.mDb;
+import com.example.formacio.androidlocaldb.R;
+import com.example.formacio.androidlocaldb.persistence.DbHelper;
+
+import static com.example.formacio.androidlocaldb.view.DatabaseActivity.mCursor;
+import static com.example.formacio.androidlocaldb.view.DatabaseActivity.mHelper;
+import static com.example.formacio.androidlocaldb.view.DatabaseActivity.mDb;
 
 public class AnimalInfo extends AppCompatActivity {
 

@@ -1,7 +1,6 @@
-package com.example.formacio.androidlocaldb;
+package com.example.formacio.androidlocaldb.view;
 
         import android.app.Activity;
-        import android.content.ContentValues;
         import android.content.Intent;
         import android.database.Cursor;
         import android.database.CursorWindow;
@@ -11,14 +10,14 @@ package com.example.formacio.androidlocaldb;
         import android.view.View;
         import android.widget.AdapterView;
         import android.widget.Button;
-        import android.widget.EditText;
         import android.widget.ListView;
         import android.widget.SimpleCursorAdapter;
         import android.widget.TextView;
 
+        import com.example.formacio.androidlocaldb.R;
+        import com.example.formacio.androidlocaldb.persistence.DbHelper;
+
         import java.lang.reflect.Field;
-        import java.text.SimpleDateFormat;
-        import java.util.Date;
 
 public class DatabaseActivity extends Activity  {
 

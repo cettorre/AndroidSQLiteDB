@@ -1,4 +1,4 @@
-package com.example.formacio.androidlocaldb;
+package com.example.formacio.androidlocaldb.persistence;
 
 /**
  * Created by formacio on 16/05/2018.
