@@ -28,7 +28,7 @@ public class MainActivity extends Activity  {
     ListView mList;
 
 
-    static SQLiteDatabase mDb;
+   // static SQLiteDatabase mDb;
     static Cursor mCursor;
     static SimpleCursorAdapter mAdapter;
 
@@ -69,8 +69,8 @@ public class MainActivity extends Activity  {
     public void onResume() {
         super.onResume();
         //Open connections to the database
-        mDb = DbUtil.getDbConnection(this);
-        mCursor=DbUtil.getCursor(this, mDb);
+       // mDb = DbUtil.getDbConnection(this);
+        mCursor=DbUtil.getCursor(this);
 
         //*****************************************
         /*this fix is necessary for android 5.1. Android 6 does not need it.
@@ -98,10 +98,10 @@ public class MainActivity extends Activity  {
             public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
                 if(columnIndex == 1) {
                     TextView text = (TextView) view;  // get your View
-                    text.setText(DbUtil.mCursor.getString(DbUtil.mCursor.getColumnIndexOrThrow(DbHelper.COL_NAME)));
+                    text.setText(mCursor.getString(mCursor.getColumnIndexOrThrow(DbHelper.COL_NAME)));
                    // text.setTextColor(Color.rgb(0,255,255));
                     text.setTextSize(24);
-                    if(mCursor.getInt(DbUtil.mCursor.getColumnIndexOrThrow(DbHelper.COL_CHIP))==1)
+                    if(mCursor.getInt(mCursor.getColumnIndexOrThrow(DbHelper.COL_CHIP))==1)
                         text.setTextColor(Color.rgb(0,255,255));
                 }
                 return false;
@@ -112,8 +112,8 @@ public class MainActivity extends Activity  {
 
 
         //Refresh the list
-        DbUtil.mCursor.requery();
-        DbUtil.mAdapter.notifyDataSetChanged();
+        mCursor.requery();
+        DbUtil.getSimpleCursorAdapter(this).notifyDataSetChanged();
 
 
 
@@ -125,7 +125,7 @@ public class MainActivity extends Activity  {
     public void onPause() {
         super.onPause();
         //Close all connections
-        mDb.close();
+        DbUtil.getDbConnection(this).close();
         mCursor.close();
     }
 

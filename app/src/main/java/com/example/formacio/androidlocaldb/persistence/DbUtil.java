@@ -10,11 +10,13 @@ public class DbUtil {
 
 
 
-    static DbHelper mHelper;
-    public static SQLiteDatabase mDb;
-   public static Cursor mCursor;
-    public static SimpleCursorAdapter mAdapter;
-    static ContentValues cv;
+    private static DbHelper mHelper;
+    private static SQLiteDatabase mDb;
+      static Cursor mCursor;
+    private static SimpleCursorAdapter mAdapter;
+    private static ContentValues cv;
+
+
 
 
         //puedo utilizar getApplicationContext???
@@ -26,7 +28,10 @@ public class DbUtil {
 
 
 
-    public static Cursor getCursor(Context context, SQLiteDatabase sqLiteDatabase){
+    public static Cursor getCursor(Context context){
+
+        SQLiteDatabase sqLiteDatabase=getDbConnection(context);
+
 
         String[] columns = new String[]{
                 "_id", DbHelper.COL_NAME,   DbHelper.COL_DATE,DbHelper.COL_AGE,
@@ -34,18 +39,22 @@ public class DbUtil {
 
         mCursor = sqLiteDatabase
                 .query(DbHelper.TABLE_NAME, columns,
-                        null, null, null, null, null, null);
+                        null, null, null,
+                        null, null, null);
 
         return mCursor;
     }
 
     public static SimpleCursorAdapter getSimpleCursorAdapter(Context context){
 
-        String[] headers = new String[]{DbHelper.COL_NAME, DbHelper.COL_DATE,DbHelper.COL_AGE,
+        String[] headers = new String[]{
+                DbHelper.COL_NAME, DbHelper.COL_DATE,DbHelper.COL_AGE,
                 DbHelper.COL_CHIP,DbHelper.COL_TYPE,DbHelper.COL_PHOTO};
 
-        mAdapter = new SimpleCursorAdapter(context, android.R.layout.two_line_list_item,
-                mCursor, headers, new int[]{android.R.id.text1, android.R.id.text2});
+        mAdapter = new SimpleCursorAdapter(
+                context, android.R.layout.two_line_list_item,
+                mCursor, headers, new int[]{
+                        android.R.id.text1, android.R.id.text2});
 
         return mAdapter;
     }

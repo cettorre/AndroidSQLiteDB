@@ -7,8 +7,8 @@ import android.widget.ImageView;
 
 import com.example.formacio.androidlocaldb.R;
 import com.example.formacio.androidlocaldb.persistence.DbHelper;
+import com.example.formacio.androidlocaldb.persistence.DbUtil;
 
-import static com.example.formacio.androidlocaldb.persistence.DbUtil.mCursor;
 import static com.example.formacio.androidlocaldb.view.AnimalInfo.positionList;
 
 public class ShowPhoto extends AppCompatActivity {
@@ -25,10 +25,12 @@ public class ShowPhoto extends AppCompatActivity {
 
         fullPhoto=findViewById(R.id.fullPhoto);
 
-        mCursor.moveToPosition(positionList);
+        DbUtil.getCursor(this).moveToPosition(positionList);
         //Get the id value of this row
 
-        String photo = mCursor.getString(mCursor.getColumnIndexOrThrow(DbHelper.COL_PHOTO));
+        String photo = DbUtil.getCursor(this)
+                .getString(DbUtil.getCursor(this)
+                        .getColumnIndexOrThrow(DbHelper.COL_PHOTO));
 
         if(photo!=null) {
             bmp = AnimalInfo.decodeFromBase64ToBitmap(photo);

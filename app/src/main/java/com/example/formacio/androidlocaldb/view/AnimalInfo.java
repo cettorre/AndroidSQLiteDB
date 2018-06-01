@@ -17,7 +17,7 @@ import com.example.formacio.androidlocaldb.persistence.DbHelper;
 import com.example.formacio.androidlocaldb.persistence.DbUtil;
 
 import static com.example.formacio.androidlocaldb.view.MainActivity.mCursor;
-import static com.example.formacio.androidlocaldb.view.MainActivity.mDb;
+//import static com.example.formacio.androidlocaldb.view.MainActivity.mDb;
 
 public class AnimalInfo extends AppCompatActivity {
 
@@ -64,8 +64,8 @@ public class AnimalInfo extends AppCompatActivity {
 
 
 
-        mDb = DbUtil.getDbConnection(this);
-        mCursor= DbUtil.getCursor(this,mDb);
+      //  mDb = DbUtil.getDbConnection(this);
+        mCursor= DbUtil.getCursor(this);
         mCursor.moveToPosition(pos);
 
         //Get the id value of this row
@@ -114,7 +114,7 @@ public class AnimalInfo extends AppCompatActivity {
                 String rowId = mCursor.getString(0); //Column 0 of the cursor is the id
                 Log.e("rowID",rowId);
 
-                mDb.delete(DbHelper.TABLE_NAME, "_id = ?", new String[]{rowId});
+                DbUtil.getDbConnection(AnimalInfo.this).delete(DbHelper.TABLE_NAME, "_id = ?", new String[]{rowId});
                 //Refresh the list
                 mCursor.requery();
 

@@ -29,8 +29,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static com.example.formacio.androidlocaldb.view.MainActivity.mCursor;
-import static com.example.formacio.androidlocaldb.view.MainActivity.mDb;
+//import static com.example.formacio.androidlocaldb.view.MainActivity.mCursor;
+//import static com.example.formacio.androidlocaldb.view.MainActivity.mDb;
 
 public class InsertAnimal extends AppCompatActivity {
 
@@ -81,8 +81,8 @@ public class InsertAnimal extends AppCompatActivity {
         //WRITE ON DB
 
         //Open connections to the database
-        mDb = DbUtil.getDbConnection(getApplicationContext());
-        mCursor=DbUtil.getCursor(this,mDb);
+       // mDb = DbUtil.getDbConnection(getApplicationContext());
+        //mCursor=DbUtil.getCursor(this);
         //Add a new value to the database
         cv = DbUtil.getContentValues();
 
@@ -117,7 +117,7 @@ public class InsertAnimal extends AppCompatActivity {
                     cv.put(DbHelper.COL_CHIP,0);
                 }
 
-                mDb.insert(DbHelper.TABLE_NAME, null, cv);
+                DbUtil.getDbConnection(InsertAnimal.this).insert(DbHelper.TABLE_NAME, null, cv);
 
                 startActivity(i);
                 } catch (NumberFormatException e) {
